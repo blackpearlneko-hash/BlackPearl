@@ -7,7 +7,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
@@ -40,13 +42,13 @@ val OffWhite = Color(0xFFF8F8F8)
 data class NavItem(val name: String, val action: () -> Unit)
 
 @Composable
-fun Navbr() {
+fun Navbr(serverdata: Boolean) {
     // 1. Define your links here
     val menuItems = remember {
         listOf(
-            NavItem("Home") { /* Navigate Home */ },
-            NavItem("Shop") { /* Navigate Shop */ },
-            NavItem("About Us") { /* Navigate About */ }
+            NavItem("Home") {  },
+            NavItem("Shop") {  },
+            NavItem("About Us") {  }
         )
     }
 
@@ -151,6 +153,7 @@ fun MobileDrawer(items: List<NavItem>, onClose: () -> Unit) {
                     .border(1.dp, BrassGold) // Nice gold border
                     .clickable(enabled = false) {} // Prevent clicks passing through sidebar
                     .padding(24.dp)
+                    .verticalScroll(rememberScrollState())
             ) {
                 // Header: Close Button
                 Row(

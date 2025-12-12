@@ -5,8 +5,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -21,12 +23,13 @@ import org.jetbrains.compose.resources.painterResource
 
 import blackpearl.composeapp.generated.resources.Res
 import blackpearl.composeapp.generated.resources.compose_multiplatform
+import org.jrexl.neko.ui.HeroSection
 import org.jrexl.neko.ui.Navbr
 
 @Composable
 fun App() {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
+        var serverdata by remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
@@ -35,7 +38,9 @@ fun App() {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
         ) {
-            Navbr()
+            Navbr(serverdata)
+            Spacer(Modifier.height(20.dp))
+            HeroSection(serverdata)
         }
     }
 }
