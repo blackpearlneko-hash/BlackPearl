@@ -1,3 +1,4 @@
+
 package org.jrexl.neko.ui
 
 import androidx.compose.foundation.background
@@ -57,9 +58,10 @@ fun Navbr(){
             modifier = Modifier.fillMaxWidth().height(80.dp)
         ){
             Row(Modifier.fillMaxSize().padding(horizontal = 20.dp), verticalAlignment = Alignment.CenterVertically) {
-                Spacer(Modifier.weight(1f))
-                LogoScreen()
                 Spacer(Modifier.width(30.dp))
+
+                LogoScreen()
+                Spacer(Modifier.weight(1f))
 
                 Row(Modifier.wrapContentSize()) {
                     navtext("Home"){
