@@ -3,6 +3,7 @@ package org.jrexl.neko
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 
 import blackpearl.composeapp.generated.resources.Res
@@ -37,3 +39,21 @@ fun App() {
         }
     }
 }
+
+
+@Composable
+fun ResponsiveVisibility(
+    breakPoint: androidx.compose.ui.unit.Dp = 800.dp,
+    desktopContent: @Composable () -> Unit,
+    mobileContent: @Composable () -> Unit
+) {
+    BoxWithConstraints {
+        if (maxWidth < breakPoint) {
+            mobileContent()
+        } else {
+            desktopContent()
+        }
+    }
+}
+
+// ./gradlew wasmJsBrowserDevelopmentRun -t
