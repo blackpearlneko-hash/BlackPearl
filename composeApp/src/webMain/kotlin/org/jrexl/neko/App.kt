@@ -24,8 +24,11 @@ import org.jetbrains.compose.resources.painterResource
 import blackpearl.composeapp.generated.resources.Res
 import blackpearl.composeapp.generated.resources.compose_multiplatform
 import org.jrexl.neko.ui.BrandStoryTeaserSection
+import org.jrexl.neko.ui.FooterSection
 import org.jrexl.neko.ui.HeroSection
 import org.jrexl.neko.ui.Navbr
+import org.jrexl.neko.ui.ProductGridSection
+import org.jrexl.neko.ui.WhyChooseSection
 
 @Composable
 fun App() {
@@ -44,6 +47,16 @@ fun App() {
             HeroSection(serverdata)
             Spacer(Modifier.height(20.dp))
             BrandStoryTeaserSection(serverdata)
+            Spacer(Modifier.height(20.dp))
+            ProductGridSection(serverdata)
+            Spacer(Modifier.height(20.dp))
+            WhyChooseSection(serverdata)
+            Spacer(Modifier.height(20.dp))
+            FooterSection()
+
+
+
+
 
         }
     }
