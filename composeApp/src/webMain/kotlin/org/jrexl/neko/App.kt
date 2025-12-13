@@ -23,6 +23,7 @@ import org.jetbrains.compose.resources.painterResource
 
 import blackpearl.composeapp.generated.resources.Res
 import blackpearl.composeapp.generated.resources.compose_multiplatform
+import org.jrexl.neko.ui.BrandStoryTeaserSection
 import org.jrexl.neko.ui.HeroSection
 import org.jrexl.neko.ui.Navbr
 
@@ -41,6 +42,9 @@ fun App() {
             Navbr(serverdata)
             Spacer(Modifier.height(20.dp))
             HeroSection(serverdata)
+            Spacer(Modifier.height(20.dp))
+            BrandStoryTeaserSection(serverdata)
+
         }
     }
 }
