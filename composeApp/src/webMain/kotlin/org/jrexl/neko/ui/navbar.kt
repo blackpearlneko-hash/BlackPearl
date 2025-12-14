@@ -31,6 +31,7 @@ import androidx.compose.ui.zIndex
 import blackpearl.composeapp.generated.resources.Res
 import blackpearl.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
+import org.jrexl.neko.App
 import kotlin.math.roundToInt
 
 // --- Global Colors ---
@@ -42,20 +43,21 @@ val OffWhite = Color(0xFFF8F8F8)
 data class NavItem(val name: String, val action: () -> Unit)
 
 @Composable
-fun Navbr(serverdata: Boolean) {
+fun Navbr( onNavigate: (String) -> Unit  ) {
     // 1. Define your links here
     val menuItems = remember {
         listOf(
-            NavItem("Home") {  },
-            NavItem("Shop") {  },
-            NavItem("About Us") {  }
+            // 2. When Home is clicked, send "HOME" signal
+            NavItem("Home") { onNavigate("HOME") },
+            NavItem("Shop") { onNavigate("SHOP") },
+            NavItem("About Us") { onNavigate("ABOUT") }
         )
     }
 
     // 2. State to control the Drawer
     var isDrawerOpen by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.fillMaxWidth().zIndex(10f)) { // High Z-Index so it sits on top
+    Column(modifier = Modifier.fillMaxWidth().zIndex(10f)) {
         PromoBanner()
 
         Surface(

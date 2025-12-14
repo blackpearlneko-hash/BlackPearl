@@ -27,36 +27,47 @@ import org.jrexl.neko.ui.FooterSection
 import org.jrexl.neko.ui.HeroSection
 import org.jrexl.neko.ui.Navbr
 import org.jrexl.neko.ui.ProductGridSection
+import org.jrexl.neko.ui.ShopPage
 import org.jrexl.neko.ui.WhyChooseSection
+
+// ... imports ...
 
 @Composable
 fun App() {
     MaterialTheme {
+        var currentScreen by remember { mutableStateOf("HOME") }
         var serverdata by remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
+                .background(MaterialTheme.colorScheme.surface)
                 .safeContentPadding()
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState()), // Global scroll for the whole page
         ) {
-            Navbr(serverdata)
+            Navbr(
+                onNavigate = { screenName -> currentScreen = screenName }
+            )
+
             Spacer(Modifier.height(20.dp))
-//            HeroSection(serverdata)
-//            Spacer(Modifier.height(20.dp))
-            BrandStoryTeaserSection(serverdata)
-            Spacer(Modifier.height(20.dp))
-            ProductGridSection(serverdata)
-            Spacer(Modifier.height(20.dp))
-            WhyChooseSection(serverdata)
-            Spacer(Modifier.height(20.dp))
+
+            when (currentScreen) {
+                "HOME" -> {
+                    BrandStoryTeaserSection(serverdata)
+                    Spacer(Modifier.height(20.dp))
+                    ProductGridSection(serverdata) // This is the horizontal slider
+                    Spacer(Modifier.height(20.dp))
+                    WhyChooseSection(serverdata)
+                }
+                "SHOP" -> {
+                    ShopPage()
+                }
+                "ABOUT" -> {
+                }
+            }
+
+            Spacer(Modifier.height(40.dp))
             FooterSection()
-
-
-
-
-
         }
     }
 }
@@ -78,3 +89,4 @@ fun ResponsiveVisibility(
 }
 
 // ./gradlew wasmJsBrowserDevelopmentRun -t
+// ./gradlew wasmJsBrowserDevelopmentRun
