@@ -21,8 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 
-import blackpearl.composeapp.generated.resources.Res
-import blackpearl.composeapp.generated.resources.compose_multiplatform
+
 import org.jrexl.neko.ui.BrandStoryTeaserSection
 import org.jrexl.neko.ui.FooterSection
 import org.jrexl.neko.ui.HeroSection
@@ -44,8 +43,8 @@ fun App() {
         ) {
             Navbr(serverdata)
             Spacer(Modifier.height(20.dp))
-            HeroSection(serverdata)
-            Spacer(Modifier.height(20.dp))
+//            HeroSection(serverdata)
+//            Spacer(Modifier.height(20.dp))
             BrandStoryTeaserSection(serverdata)
             Spacer(Modifier.height(20.dp))
             ProductGridSection(serverdata)

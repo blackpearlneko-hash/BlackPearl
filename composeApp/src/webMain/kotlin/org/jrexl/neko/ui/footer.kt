@@ -54,7 +54,6 @@ fun FooterSection() {
                 Spacer(modifier = Modifier.height(48.dp))
                 FooterSeoText(mutedGrey, Alignment.CenterHorizontally)
             } else {
-                // Desktop Layout: 3 Columns
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,

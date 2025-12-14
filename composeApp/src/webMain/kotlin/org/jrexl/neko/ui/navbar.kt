@@ -288,7 +288,7 @@ fun PromoBanner() {
 
         // 4. Render the Text with the animated offset
         Text(
-            text = "Hello from Pearl",
+            text = "Black Pearl, Where Every Piece Has Sailed Through Time",
             style = MaterialTheme.typography.bodySmall,
             color = DeepNavy,
             fontWeight = FontWeight.Bold,

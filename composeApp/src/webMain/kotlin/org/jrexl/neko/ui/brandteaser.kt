@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import blackpearl.composeapp.generated.resources.Res
+import blackpearl.composeapp.generated.resources.bestsellersection
 import blackpearl.composeapp.generated.resources.herosection
 import org.jetbrains.compose.resources.painterResource
 
@@ -34,7 +35,7 @@ fun BrandStoryTeaserSection(serverdata: Boolean) {
     val creamBackground = Color(0xFFF9F7F2)
 
     // Replace R.drawable.artisan_brass with your actual image resource
-    val imagePainter = painterResource(Res.drawable.herosection)
+    val imagePainter = painterResource(Res.drawable.bestsellersection)
 
     BoxWithConstraints() {
         val isMobile = maxWidth < 800.dp
@@ -130,7 +131,7 @@ fun StoryContent(isDesktop: Boolean) {
         // The Story Quote
         Text(
             text = buildAnnotatedString {
-                append("Every piece tells a story—")
+                append("Discover Timeless Brass Handicrafts, Antique Decor, and Nautical Treasures With Black Pearl—")
                 withStyle(style = SpanStyle(fontStyle = FontStyle.Italic, color = agedBrass)) {
                     append("crafted by artisans")
                 }

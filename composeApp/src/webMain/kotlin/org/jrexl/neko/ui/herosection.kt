@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import blackpearl.composeapp.generated.resources.Res
+import blackpearl.composeapp.generated.resources.bestsellersection
 import blackpearl.composeapp.generated.resources.herosection
 import blackpearl.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
@@ -61,8 +62,8 @@ private fun MobileHeroContent( serverdata: Boolean
         }
         else{
             Image(
-                painter = painterResource(Res.drawable.herosection),
-                contentDescription = "herosec",
+                painter = painterResource(Res.drawable.bestsellersection),
+                contentDescription = "best",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
@@ -72,9 +73,7 @@ private fun MobileHeroContent( serverdata: Boolean
     Column(
         modifier = Modifier.fillMaxWidth().height(200.dp)
     ) {
-        // Title (Smaller for Mobile)
         Spacer(modifier = Modifier.weight(1f))
-        // Title (Larger for Desktop)
         Row(Modifier.padding(start = 20.dp)) {
             Text(
             "The best of 2025",
