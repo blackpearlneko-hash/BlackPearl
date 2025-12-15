@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Productdc(
-    val prodid: String,
 
     @SerialName("Prodtname")
     val name: String,
