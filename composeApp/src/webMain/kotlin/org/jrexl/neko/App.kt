@@ -90,3 +90,6 @@ fun ResponsiveVisibility(
 
 // ./gradlew wasmJsBrowserDevelopmentRun -t
 // ./gradlew wasmJsBrowserDevelopmentRun
+//  ./gradlew kotlinUpgradeYarnLock
+// ./gradlew kotlinWasmUpgradeYarnLock
+//  ./gradlew kotlinUpgradeYarnLock kotlinWasmUpgradeYarnLock clean wasmJsBrowserDevelopmentRun

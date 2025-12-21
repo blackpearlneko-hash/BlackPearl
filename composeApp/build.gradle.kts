@@ -37,8 +37,10 @@ kotlin {
 
             // JSON Serialization
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-            implementation("io.ktor:ktor-client-js:3.0.0")
+            implementation("io.ktor:ktor-client-js:3.0.1")
             implementation("io.ktor:ktor-client-core:3.0.0")
+            implementation("media.kamel:kamel-image-default:1.0.8")
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import blackpearl.composeapp.generated.resources.Res
 import blackpearl.composeapp.generated.resources.herosection
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -32,7 +36,7 @@ data class Product(
     val id: Int,
     val name: String,
     val description: String,
-    val images: List<DrawableResource>
+    val images: List<String>
 )
 
 @Composable
@@ -48,13 +52,6 @@ fun ProductGridSection(serverdata: Boolean) {
         Res.drawable.herosection
     )
 
-    val productList = listOf(
-        Product(1, "Vintage Brass Telescope", "See the horizon clearly with this classic piece.", sampleImages),
-        Product(2, "Nautical Brass Compass", "Find your true north.", sampleImages),
-        Product(3, "Antique Ship Wheel", "Steer your own course.", sampleImages),
-        Product(4, "Brass Lanterns & Bells", "Light up the dark seas.", sampleImages),
-        Product(5, "Captain's Logbook", "Record your daily journey.", sampleImages) // Added one more to test scrolling
-    )
 
     Column(
         modifier = Modifier
@@ -84,13 +81,7 @@ fun ProductGridSection(serverdata: Boolean) {
             horizontalArrangement = Arrangement.spacedBy(24.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            items(productList) { product ->
-                // WRAPPER: We must give the card a fixed width in a horizontal row
-                // otherwise it might try to be too thin or too wide.
-                Box(modifier = Modifier.width(320.dp)) {
-                    ProductCard(product, darkNavy)
-                }
-            }
+
         }
     }
 }
@@ -109,7 +100,6 @@ fun ProductCard(product: Product, textColor: Color) {
             .border(1.dp, Color.LightGray.copy(alpha = 0.5f), RectangleShape)
             .padding(16.dp)
     ) {
-        // Image Container
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -121,11 +111,23 @@ fun ProductCard(product: Product, textColor: Color) {
                 state = pagerState,
                 modifier = Modifier.fillMaxSize()
             ) { pageIndex ->
-                Image(
-                    painter = painterResource(product.images[pageIndex]),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+
+
+                val imageUrl = product.images[pageIndex]
+                val resource = asyncPainterResource(data = imageUrl)
+                KamelImage(
+                    resource = resource,
+                    contentDescription = "Image",
+                    modifier = Modifier.fillMaxSize(),
+                    onLoading = { progress ->
+                        // If this shows, Kamel is waiting for the server
+                        CircularProgressIndicator()
+                    },
+                    onFailure = { exception ->
+                        // If this shows, there is a CORS or 404 error
+                        Icon(Icons.Default.Warning, contentDescription = "Error")
+                        println("Kamel Error: ${exception.message}")
+                    }
                 )
             }
 

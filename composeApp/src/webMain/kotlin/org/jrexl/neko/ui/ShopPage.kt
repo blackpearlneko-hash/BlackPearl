@@ -15,6 +15,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,6 +33,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import org.jrexl.neko.ApiRoute.productRoute
 import org.jrexl.neko.dataclass.Productdc
 
@@ -106,7 +112,23 @@ fun pdcard(product: Productdc?, modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(4.dp).border(1.dp, Color.Black).background(Color.White)) {
         Box(modifier = Modifier.fillMaxWidth().height(180.dp)){
             if (product?.images?.isNotEmpty() ?: false) {
+                val imageUrl = product.images[currentImageIndex]
 
+                val resource = asyncPainterResource(data = imageUrl)
+                KamelImage(
+                    resource = resource,
+                    contentDescription = "Image",
+                    modifier = Modifier.fillMaxSize(),
+                    onLoading = { progress ->
+                        // If this shows, Kamel is waiting for the server
+                        CircularProgressIndicator()
+                    },
+                    onFailure = { exception ->
+                        // If this shows, there is a CORS or 404 error
+                        Icon(Icons.Default.Warning, contentDescription = "Error")
+                        println("Kamel Error: ${exception.message}")
+                    }
+                )
 
                 if (currentImageIndex > 0){
                     Text("<", modifier = Modifier.align(Alignment.CenterStart)
@@ -120,22 +142,21 @@ fun pdcard(product: Productdc?, modifier: Modifier = Modifier) {
 
 
             }
-            Spacer(Modifier.height(8.dp))
-            Text(
-                product?.name ?: "",
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
-            Text(
-                text = "₹${product?.price ?: ""}",
-                fontSize = 14.sp,
-                color = Color(0xFF388E3C),
-                modifier = Modifier.padding(8.dp)
-            )
-
 
         }
+        Spacer(Modifier.height(8.dp))
+        Text(
+            product?.name ?: "",
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp,
+            modifier = Modifier.padding(horizontal = 8.dp)
+        )
+        Text(
+            text = "₹${product?.price ?: ""}",
+            fontSize = 14.sp,
+            color = Color(0xFF388E3C),
+            modifier = Modifier.padding(8.dp)
+        )
     }
 
 }

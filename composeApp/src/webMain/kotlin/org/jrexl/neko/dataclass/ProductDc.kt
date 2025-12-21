@@ -21,7 +21,6 @@ data class Productdc(
     @SerialName("ProdtstockQuantity")
     val stockQuantity: Int,
 
-    // Your backend sends an array of URL strings
     @SerialName("Productimg")
     val images: List<String>
 )
