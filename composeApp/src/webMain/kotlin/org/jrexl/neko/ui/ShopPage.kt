@@ -15,8 +15,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -157,6 +161,37 @@ fun pdcard(product: Productdc?, modifier: Modifier = Modifier) {
             color = Color(0xFF388E3C),
             modifier = Modifier.padding(8.dp)
         )
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Button(
+                onClick = {},
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFFFA500)
+                )
+            ) {
+                Text(
+                    text = "Add Cart",
+                    color = Color.White
+                )
+            }
+            Spacer(Modifier.weight(1f))
+
+            Button(
+                onClick = {},
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFFFC107) // Yellow-Orange (Material Amber)
+                )
+            ) {
+                Text(
+                    text = "Buy Now",
+                    color = Color.White
+                )
+            }
+        }
+
     }
 
 }
