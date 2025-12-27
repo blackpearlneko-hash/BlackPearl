@@ -5,7 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BlackPearl</title>
     <link type="text/css" rel="stylesheet" href="styles.css">
+
+
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <script>
+        let googleInitialized = false;
+        let googleCallback = null;
+
+        function initGoogleLogin() {
+            if (googleInitialized) return;
+
+            google.accounts.id.initialize({
+                client_id: "197683534024-9v1ddqjvjl6e2n4sl8vgl1uudu79tbqb.apps.googleusercontent.com",
+                callback: (response) => {
+                    if (googleCallback) {
+                        googleCallback(response.credential);
+                    }
+                },
+                ux_mode: "popup",
+                use_fedcm_for_prompt: false
+
+            });
+
+            googleInitialized = true;
+        }
+
+        function googleLogin(callback) {
+            initGoogleLogin();
+            googleCallback = callback;
+
+            // Explicit popup trigger
+            google.accounts.id.prompt();
+        }
+    </script>
+
+
 
 
 </head>

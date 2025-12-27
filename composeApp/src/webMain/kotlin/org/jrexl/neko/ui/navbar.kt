@@ -30,8 +30,12 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.zIndex
 import blackpearl.composeapp.generated.resources.Res
 import blackpearl.composeapp.generated.resources.logo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
-import org.jrexl.neko.App
+import org.jrexl.neko.Auth.googleLogin
+import org.jrexl.neko.interfacefun.sendGoogleToken
 import kotlin.math.roundToInt
 
 // --- Global Colors ---
@@ -112,7 +116,12 @@ fun Navbr( onNavigate: (String) -> Unit  ) {
                         // Right Buttons
                         Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
                             Ordernav("Cart") { }
-                            signin("Sign In")
+                            signin("Sign In"){
+                                    token ->
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    sendGoogleToken(token)
+                                }
+                            }
                         }
                     }
                 }
@@ -197,7 +206,12 @@ fun MobileDrawer(items: List<NavItem>, onClose: () -> Unit) {
                 Spacer(Modifier.weight(1f))
 
                 // Bottom: Sign In Button in Drawer
-                signin("Sign In")
+                signin("Sign In"){
+                        token ->
+                    CoroutineScope(Dispatchers.Main).launch {
+                        sendGoogleToken(token)
+                    }
+                }
             }
         }
     }
@@ -220,10 +234,21 @@ fun Ordernav(name: String, function: () -> Unit) {
     }
 }
 
+
+
+
+
+
+
 @Composable
-fun signin(name: String) {
+fun signin(name: String,     onTokenReceived: (String) -> Unit
+) {
     Button(
-        onClick = { },
+        onClick = {
+            googleLogin { token ->
+                onTokenReceived(token)
+            }
+        },
         colors = ButtonDefaults.buttonColors(containerColor = BrassGold, contentColor = DeepNavy),
         shape = RoundedCornerShape(50),
         modifier = Modifier.height(42.dp)

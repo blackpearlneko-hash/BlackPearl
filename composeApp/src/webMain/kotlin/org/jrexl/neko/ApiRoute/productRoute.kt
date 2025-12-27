@@ -17,4 +17,14 @@ object productRoute {
             contentType(ContentType.Application.Json)
         }.body()
     }
+
+
+    suspend fun getbestproduct(): List<Productdc>{
+        return KtorClient.httpClient.get {
+            url{
+                path("product", "bestproduct")
+            }
+            contentType(ContentType.Application.Json)
+        }.body()
+    }
 }

@@ -55,7 +55,7 @@ fun App() {
                 "HOME" -> {
                     BrandStoryTeaserSection(serverdata)
                     Spacer(Modifier.height(20.dp))
-                    ProductGridSection(serverdata) // This is the horizontal slider
+                    ProductGridSection()
                     Spacer(Modifier.height(20.dp))
                     WhyChooseSection(serverdata)
                 }
