@@ -14,11 +14,22 @@
         let googleCallback = null;
 
         function initGoogleLogin() {
-            if (googleInitialized) return;
+            console.log("initGoogleLogin() called");
+
+            if (googleInitialized) {
+                console.log("Google already initialized");
+                return;
+            }
+
+            if (!window.google || !google.accounts || !google.accounts.id) {
+                console.error("Google Identity SDK not loaded yet");
+                return;
+            }
 
             google.accounts.id.initialize({
                 client_id: "197683534024-9v1ddqjvjl6e2n4sl8vgl1uudu79tbqb.apps.googleusercontent.com",
                 callback: (response) => {
+                    console.log("Google callback fired", response);
                     if (googleCallback) {
                         googleCallback(response.credential);
                     }
@@ -27,16 +38,22 @@
             });
 
             googleInitialized = true;
+            console.log("Google initialized successfully");
         }
 
         function googleLogin(callback) {
-            initGoogleLogin();
+            console.log("googleLogin() called");
             googleCallback = callback;
 
-            // Explicit popup trigger
-            google.accounts.id.prompt();
+            initGoogleLogin();
+
+            console.log("Calling google.accounts.id.prompt()");
+            google.accounts.id.prompt((notification) => {
+                console.log("Prompt notification:", notification);
+            });
         }
     </script>
+
 
 
 

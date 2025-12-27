@@ -245,7 +245,11 @@ fun signin(name: String,     onTokenReceived: (String) -> Unit
 ) {
     Button(
         onClick = {
+            println("SIGN IN button clicked")   // 🔥 IMPORTANT
+
             googleLogin { token ->
+                println("Token received in Kotlin: $token")
+
                 onTokenReceived(token)
             }
         },
