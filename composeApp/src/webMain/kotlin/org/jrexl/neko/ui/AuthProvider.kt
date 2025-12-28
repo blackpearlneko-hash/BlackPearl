@@ -10,17 +10,26 @@ fun AuthProvider(content: @Composable () -> Unit) {
 
     val auth = remember { AuthContext() }
 
-    LaunchedEffect(Unit) {
-        try {
-            val response = ApiClient.getme()
-            auth.isLoggedIn = true
-            auth.user = response?.user
-        } catch (e: Exception) {
-            auth.isLoggedIn = false
-        } finally {
-            auth.loading = false
+
+        LaunchedEffect(Unit) {
+            try {
+                val response = ApiClient.getme()
+
+                if (response != null) {
+                    auth.isLoggedIn = true
+                    auth.user = response.user
+                } else {
+                    auth.isLoggedIn = false
+                    auth.user = null
+                }
+
+            } catch (e: Exception) {
+                auth.isLoggedIn = false
+                auth.user = null
+            } finally {
+                auth.loading = false
+            }
         }
-    }
 
     CompositionLocalProvider(LocalAuthContext provides auth) {
         content()
