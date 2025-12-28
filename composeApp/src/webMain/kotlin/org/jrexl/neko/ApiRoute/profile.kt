@@ -14,9 +14,16 @@ object ApiClient {
         }.body()
     }
 
-    suspend fun getme(): GoogleLoginResponse{
-        return KtorClient.httpClient.get("/api/auth/me").body<GoogleLoginResponse>()
+    suspend fun getme(): GoogleLoginResponse? {
+        val response = KtorClient.httpClient.get("/api/auth/me")
+
+        return if (response.status.isSuccess()) {
+            response.body()
+        } else {
+            null
+        }
     }
+
 
     suspend fun logout(){
 

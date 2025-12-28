@@ -14,7 +14,7 @@ fun AuthProvider(content: @Composable () -> Unit) {
         try {
             val response = ApiClient.getme()
             auth.isLoggedIn = true
-            auth.user = response.user
+            auth.user = response?.user
         } catch (e: Exception) {
             auth.isLoggedIn = false
         } finally {
