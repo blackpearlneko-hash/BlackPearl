@@ -30,13 +30,24 @@ import org.jrexl.neko.ui.Navbr
 import org.jrexl.neko.ui.ProductGridSection
 import org.jrexl.neko.ui.ShopPage
 import org.jrexl.neko.ui.WhyChooseSection
+import org.jrexl.neko.vm.LocalAuthContext
 
 // ... imports ...
 
 @Composable
 fun App() {
+    val auth = LocalAuthContext.current
+
+    when {
+        auth.loading -> {
+            // IMPORTANT: render something
+            Text("Loading...")
+        }
+        else -> {
+
+
     MaterialTheme {
-        AuthProvider {
+
         var currentScreen by remember { mutableStateOf("HOME") }
         var serverdata by remember { mutableStateOf(false) }
 
@@ -71,7 +82,7 @@ fun App() {
             Spacer(Modifier.height(40.dp))
             FooterSection()
         }
-    }}
+    }} }
 }
 
 
