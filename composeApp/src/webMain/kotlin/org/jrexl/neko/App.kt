@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
+import org.jrexl.neko.ui.AuthProvider
 
 
 import org.jrexl.neko.ui.BrandStoryTeaserSection
@@ -35,6 +36,7 @@ import org.jrexl.neko.ui.WhyChooseSection
 @Composable
 fun App() {
     MaterialTheme {
+        AuthProvider {
         var currentScreen by remember { mutableStateOf("HOME") }
         var serverdata by remember { mutableStateOf(false) }
 
@@ -69,7 +71,7 @@ fun App() {
             Spacer(Modifier.height(40.dp))
             FooterSection()
         }
-    }
+    }}
 }
 
 
