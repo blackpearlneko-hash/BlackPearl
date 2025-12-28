@@ -253,8 +253,15 @@ fun signin(name: String) {
                     scope.launch {
                         ApiClient.googleLogin(mapOf("idToken" to token))
                         val me = ApiClient.getme()
-                        auth.isLoggedIn = true
-                        auth.user = me.user
+
+                        if (me != null) {
+                            auth.isLoggedIn = true
+                            auth.user = me.user
+                        } else {
+                            auth.isLoggedIn = false
+                            auth.user = null
+                        }
+
                     }
                 }
             }

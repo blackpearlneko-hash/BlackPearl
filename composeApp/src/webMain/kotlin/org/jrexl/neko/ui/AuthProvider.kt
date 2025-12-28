@@ -23,6 +23,7 @@ fun AuthProvider(content: @Composable () -> Unit) {
                     auth.user = null
                 }
 
+
             } catch (e: Exception) {
                 auth.isLoggedIn = false
                 auth.user = null

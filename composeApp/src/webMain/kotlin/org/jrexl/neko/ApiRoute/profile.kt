@@ -7,7 +7,7 @@ import org.jrexl.neko.dataclass.GoogleLoginResponse
 
 object ApiClient {
 
-    suspend fun googleLogin(body: Map<String, String>): GoogleLoginResponse {
+    suspend fun googleLogin(body: Map<String, String>): GoogleLoginResponse? {
         return KtorClient.httpClient.post("/api/auth/google") {
             contentType(ContentType.Application.Json)
             setBody(body)
