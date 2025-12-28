@@ -42,10 +42,9 @@ kotlin {
             implementation("media.kamel:kamel-image-default:1.0.8")
 
         }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
     }
 }
-
-

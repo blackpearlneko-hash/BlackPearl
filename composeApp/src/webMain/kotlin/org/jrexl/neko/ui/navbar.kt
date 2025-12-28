@@ -34,8 +34,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import org.jrexl.neko.ApiRoute.ApiClient
 import org.jrexl.neko.Auth.googleLogin
-import org.jrexl.neko.interfacefun.sendGoogleToken
+import org.jrexl.neko.vm.LocalAuthContext
 import kotlin.math.roundToInt
 
 // --- Global Colors ---
@@ -116,12 +117,7 @@ fun Navbr( onNavigate: (String) -> Unit  ) {
                         // Right Buttons
                         Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
                             Ordernav("Cart") { }
-                            signin("Sign In"){
-                                    token ->
-                                CoroutineScope(Dispatchers.Main).launch {
-                                    sendGoogleToken(token)
-                                }
-                            }
+                            signin("Sign In")
                         }
                     }
                 }
@@ -206,12 +202,7 @@ fun MobileDrawer(items: List<NavItem>, onClose: () -> Unit) {
                 Spacer(Modifier.weight(1f))
 
                 // Bottom: Sign In Button in Drawer
-                signin("Sign In"){
-                        token ->
-                    CoroutineScope(Dispatchers.Main).launch {
-                        sendGoogleToken(token)
-                    }
-                }
+                signin("Sign In")
             }
         }
     }
@@ -241,25 +232,44 @@ fun Ordernav(name: String, function: () -> Unit) {
 
 
 @Composable
-fun signin(name: String,     onTokenReceived: (String) -> Unit
-) {
+fun signin(name: String) {
+    val auth = LocalAuthContext.current
+    val scope = rememberCoroutineScope()
+
+    val buttonText = if (auth.isLoggedIn) "Log Out" else name
+
     Button(
         onClick = {
-            println("SIGN IN button clicked")   // 🔥 IMPORTANT
-
-            googleLogin { token ->
-                println("Token received in Kotlin: $token")
-
-                onTokenReceived(token)
+            if (auth.isLoggedIn) {
+                // LOGOUT
+                scope.launch {
+                    ApiClient.logout()
+                    auth.isLoggedIn = false
+                    auth.user = null
+                }
+            } else {
+                // LOGIN
+                googleLogin { token ->
+                    scope.launch {
+                        ApiClient.googleLogin(mapOf("idToken" to token))
+                        val me = ApiClient.getme()
+                        auth.isLoggedIn = true
+                        auth.user = me.user
+                    }
+                }
             }
         },
-        colors = ButtonDefaults.buttonColors(containerColor = BrassGold, contentColor = DeepNavy),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = BrassGold,
+            contentColor = DeepNavy
+        ),
         shape = RoundedCornerShape(50),
         modifier = Modifier.height(42.dp)
     ) {
-        Text(name.uppercase(), fontWeight = FontWeight.ExtraBold, fontSize = 14.sp)
+        Text(buttonText.uppercase())
     }
 }
+
 
 @Composable
 fun navtext(name: String, function: () -> Unit) {
