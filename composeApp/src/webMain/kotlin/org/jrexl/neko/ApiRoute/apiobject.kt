@@ -4,8 +4,6 @@ package org.jrexl.neko.ApiRoute
 
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.cookies.AcceptAllCookiesStorage
-import io.ktor.client.plugins.cookies.HttpCookies
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
@@ -17,6 +15,7 @@ object KtorClient {
         // 1. Configure the Base URL
         defaultRequest {
             url(BASE_URL)
+
         }
 
         // 2. Configure JSON
@@ -28,8 +27,6 @@ object KtorClient {
             })
         }
 
-        install(HttpCookies){
-            storage = AcceptAllCookiesStorage()
-        }
+
     }
 }

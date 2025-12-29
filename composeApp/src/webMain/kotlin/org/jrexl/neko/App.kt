@@ -1,62 +1,33 @@
 package org.jrexl.neko
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
+
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
-import org.jrexl.neko.ui.AuthProvider
+import org.jrexl.neko.PiretsUi.homePageUi
+import org.jrexl.neko.ui.*
 
-
-import org.jrexl.neko.ui.BrandStoryTeaserSection
-import org.jrexl.neko.ui.FooterSection
-import org.jrexl.neko.ui.HeroSection
-import org.jrexl.neko.ui.Navbr
-import org.jrexl.neko.ui.ProductGridSection
-import org.jrexl.neko.ui.ShopPage
-import org.jrexl.neko.ui.WhyChooseSection
-import org.jrexl.neko.vm.LocalAuthContext
-
-// ... imports ...
 
 @Composable
 fun App() {
-    val auth = LocalAuthContext.current
 
-    when {
-        auth.loading -> {
-            // IMPORTANT: render something
-            Text("Loading...")
-        }
-        else -> {
 
 
     MaterialTheme {
 
         var currentScreen by remember { mutableStateOf("HOME") }
-        var serverdata by remember { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.surface)
                 .safeContentPadding()
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState()), // Global scroll for the whole page
+                .verticalScroll(rememberScrollState()),
         ) {
             Navbr(
                 onNavigate = { screenName -> currentScreen = screenName }
@@ -66,24 +37,18 @@ fun App() {
 
             when (currentScreen) {
                 "HOME" -> {
-                    BrandStoryTeaserSection(serverdata)
-                    Spacer(Modifier.height(20.dp))
-                    ProductGridSection()
-                    Spacer(Modifier.height(20.dp))
-                    WhyChooseSection(serverdata)
+                    homePageUi()
+
                 }
                 "SHOP" -> {
-                    ShopPage()
+
                 }
                 "ABOUT" -> {
                 }
             }
-
-            Spacer(Modifier.height(40.dp))
-            FooterSection()
         }
-    }} }
-}
+    }}
+
 
 
 @Composable
