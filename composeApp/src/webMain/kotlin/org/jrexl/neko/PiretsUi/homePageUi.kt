@@ -138,20 +138,19 @@ fun mobilehomepage(){
         Text(
             text = "Black Pearl, Where Every Piece Has Sailed Through Time",
             color = Color(0xFFE6D3A3),
-            fontSize = 13.sp,
+            fontSize = 10.sp,
             fontWeight = FontWeight.SemiBold,
-            letterSpacing = 0.8.sp,
-            modifier = Modifier.padding(top = 55.dp)
+            modifier = Modifier.padding(top = 52.dp)
                 .offset { IntOffset(offsetX.value.toInt(), 0) }
         )
-            Spacer(Modifier.height(17.dp))
+            Spacer(Modifier.height(7.dp))
             Image(
                 painter = painterResource(Res.drawable.logolo),
                 contentDescription = "logo",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier.size(110.dp).padding(start = 10.dp)
             )
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(5.dp))
 
             Row(
                 modifier = Modifier
@@ -178,7 +177,7 @@ fun mobilehomepage(){
                 Spacer(modifier = Modifier.width(6.dp))
             }
 
-            Spacer(Modifier.height(83.dp))
+            Spacer(Modifier.height(77.dp))
             Row {
                 Text(
                     text = "Explore",
