@@ -39,7 +39,7 @@ fun Navbr( onNavigate: (String) -> Unit  ) {
         listOf(
             // 2. When Home is clicked, send "HOME" signal
             NavItem("Home") { onNavigate("HOME") },
-            NavItem("Shop") { onNavigate("SHOP") },
+            NavItem("PRODUCT") { onNavigate("PRODUCT") },
             NavItem("About Us") { onNavigate("ABOUT") }
         )
     }}

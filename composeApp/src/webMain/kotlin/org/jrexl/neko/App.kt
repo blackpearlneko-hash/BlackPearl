@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.jrexl.neko.PiretsUi.allProductSection
 import org.jrexl.neko.PiretsUi.homePageUi
 import org.jrexl.neko.ui.*
 
@@ -37,10 +38,17 @@ fun App() {
 
             when (currentScreen) {
                 "HOME" -> {
-                    homePageUi()
+                    homePageUi(){
+                            screen ->
+                        currentScreen = screen
+                    }
 
                 }
-                "SHOP" -> {
+                "PRODUCT" -> {
+                    allProductSection(){
+                        screen ->
+                        currentScreen = screen
+                    }
 
                 }
                 "ABOUT" -> {

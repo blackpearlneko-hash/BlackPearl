@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -54,8 +55,27 @@ import blackpearl.composeapp.generated.resources.youtube
 import org.jetbrains.compose.resources.painterResource
 
 
+
+enum class HeightCategory {
+    H640,
+    H655,
+    H670,
+    H685,
+    H700,
+    H715,
+    H730,
+    H745,
+    H760,
+    H775,
+    H790,
+    H805,
+    H820,
+    H835
+}
+
 @Composable
-fun homePageUi() {
+fun homePageUi(    onNavigate: (String) -> Unit
+) {
     BoxWithConstraints(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -64,7 +84,7 @@ fun homePageUi() {
         val isMobile = screenWidth < 750.dp
         if (isMobile) {
 
-            mobilehomepageview()
+            mobilehomepageview(onNavigate)
         }
         else{
             desktophomepage()
@@ -75,7 +95,7 @@ fun homePageUi() {
 
 
 @Composable
-fun mobilehomepageview(){
+fun mobilehomepageview(onNavigate: (String) -> Unit){
     when {
         isTooSmallPhone() -> {
             UnsupportedDeviceScreen()
@@ -86,14 +106,16 @@ fun mobilehomepageview(){
         }
 
         else -> {
-            mobilehomepage() // your real UI
+            mobilehomepage(onNavigate) // your real UI
         }
     }
 }
 
 
 @Composable
-fun mobilehomepage(){
+fun mobilehomepage(onNavigate: (String) -> Unit){
+
+
 
 
     val offsetX = remember { Animatable(0f) }
@@ -105,9 +127,26 @@ fun mobilehomepage(){
     val FooterGold = Color(0xFFF6CF9A)
     val FooterMuted = Color(0xFFE8D8B5)
 
+    val heightDp = screenheight()
+    val ratio = heightWidthRatio()
 
+    val basedep: Float = when (heightCategory(heightDp)) {
 
-
+        HeightCategory.H640 -> 1.0f
+        HeightCategory.H655 -> 1.30f
+        HeightCategory.H670 -> 1.2f
+        HeightCategory.H685 -> 1.3f
+        HeightCategory.H700 -> 1.2f
+        HeightCategory.H715 -> 1.2f
+        HeightCategory.H730 -> 1.23f
+        HeightCategory.H745 -> 1.7f
+        HeightCategory.H760 -> 1.5f
+        HeightCategory.H775 -> 1.9f
+        HeightCategory.H790 -> 2.0f
+        HeightCategory.H805 -> 1.26f
+        HeightCategory.H820 -> 2.2f
+        HeightCategory.H835 -> 1.7f
+    }
 
 
     LaunchedEffect(Unit) {
@@ -171,14 +210,15 @@ fun mobilehomepage(){
             modifier = Modifier.padding(top = 65.dp)
                 .offset { IntOffset(offsetX.value.toInt(), 0) }
         )
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height((basedep * 15).dp))
+
             Image(
                 painter = painterResource(Res.drawable.logolo),
                 contentDescription = "logo",
                 contentScale = ContentScale.Fit,
-                modifier = Modifier.size(110.dp).padding(top = 15.dp, start = 1.dp)
+                modifier = Modifier.size(110.dp).padding(start = 1.dp)
             )
-            Spacer(Modifier.height(35.dp))
+            Spacer(Modifier.height((basedep * 30).dp))
 
             Row(
                 modifier = Modifier
@@ -203,12 +243,17 @@ fun mobilehomepage(){
                     )
                 }
             }
+            Spacer(Modifier.height((basedep * 70).dp))
 
-            Spacer(Modifier.height(90.dp))
+
+
             Row {
                 Text(
                     text = "Explore",
-                    modifier = Modifier.padding(start = 30.dp).clickable(onClick = {  }),
+                    modifier = Modifier.padding(start = 30.dp).clickable(onClick = {
+                        onNavigate("PRODUCT")
+
+                    }),
                     fontFamily = FontFamily.Cursive,
                     fontStyle = FontStyle.Italic,
                     fontWeight = FontWeight.Bold,
@@ -228,8 +273,9 @@ Spacer(Modifier.width(50.dp))
 
 
             }
+            Spacer(Modifier.height((basedep * 5).dp))
 
-            Spacer(Modifier.height(6.dp))
+
             Row {
                 Spacer(Modifier.weight(1f))
                 Image(
@@ -242,7 +288,24 @@ Spacer(Modifier.width(50.dp))
 
             }
 
-            Spacer(Modifier.height(75.dp))
+//            Text(basedep.toString(),
+//                fontFamily = FontFamily.Cursive,
+//                fontStyle = FontStyle.Italic,
+//                fontWeight = FontWeight.Bold,
+//                fontSize = 15.sp,
+//                color = Color(0xFFF6CF9A),)
+//            Text(heightDp.toString(),
+//                fontFamily = FontFamily.Cursive,
+//                fontStyle = FontStyle.Italic,
+//                fontWeight = FontWeight.Bold,
+//                fontSize = 15.sp,
+//                color = Color(0xFFF6CF9A),)
+//            Text(ratio.toString(),
+//                fontFamily = FontFamily.Cursive,
+//                fontStyle = FontStyle.Italic,
+//                fontWeight = FontWeight.Bold,
+//                fontSize = 15.sp,
+//                color = Color(0xFFF6CF9A),)
 
             Row {
                 Spacer(Modifier.width(14.dp))
@@ -515,6 +578,39 @@ fun isTooSmallPhone(): Boolean {
     return size.width < 320
 }
 
+
+
+fun heightCategory(heightDp: Int): HeightCategory =
+    when {
+        heightDp <= 640 -> HeightCategory.H640
+        heightDp <= 655 -> HeightCategory.H655
+        heightDp <= 670 -> HeightCategory.H670
+        heightDp <= 685 -> HeightCategory.H685
+        heightDp <= 700 -> HeightCategory.H700
+        heightDp <= 715 -> HeightCategory.H715
+        heightDp <= 730 -> HeightCategory.H730
+        heightDp <= 745 -> HeightCategory.H745
+        heightDp <= 760 -> HeightCategory.H760
+        heightDp <= 775 -> HeightCategory.H775
+        heightDp <= 790 -> HeightCategory.H790
+        heightDp <= 805 -> HeightCategory.H805
+        heightDp <= 820 -> HeightCategory.H820
+        else -> HeightCategory.H835
+    }
+
+
+@Composable
+fun screenheight(): Int {
+    val size = LocalWindowInfo.current.containerSize
+    val density = LocalDensity.current
+    return with(density) { size.height.toDp().value.toInt() }
+}
+
+@Composable
+fun heightWidthRatio(): Float {
+    val size = LocalWindowInfo.current.containerSize
+    return size.height.toFloat() / size.width.toFloat()
+}
 
 
 @Composable
