@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +32,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -61,7 +63,8 @@ fun homePageUi() {
         val screenWidth = maxWidth
         val isMobile = screenWidth < 750.dp
         if (isMobile) {
-            mobilehomepage()
+
+            mobilehomepageview()
         }
         else{
             desktophomepage()
@@ -70,13 +73,32 @@ fun homePageUi() {
 
 }
 
+
+@Composable
+fun mobilehomepageview(){
+    when {
+        isTooSmallPhone() -> {
+            UnsupportedDeviceScreen()
+        }
+
+        isLandscape() -> {
+            RotateDeviceScreen()
+        }
+
+        else -> {
+            mobilehomepage() // your real UI
+        }
+    }
+}
+
+
 @Composable
 fun mobilehomepage(){
 
+
     val offsetX = remember { Animatable(0f) }
     val leftLimit = -200f
-    val rightLimit = 200f
-    val BlackPearlGold = Color(0xFFF6CF9A)
+    val rightLimit = 250f
     val TitleGold = Color(0xFFF6CF9A)
     val TextGold = Color(0xFFE8D8B5)
     val DividerGold = Color(0xFF8A6B3E)
@@ -110,12 +132,13 @@ fun mobilehomepage(){
         }
     }
 
-    Box(Modifier.fillMaxWidth().fillMaxHeight()) {
+    Box(Modifier.fillMaxWidth().aspectRatio( 9f / 16f
+    )) {
         Image(
             painter = painterResource(Res.drawable.mobilehome),
-            contentDescription = "best",
+            contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxHeight().fillMaxWidth()
+            modifier = Modifier.fillMaxSize()
         )
         Box(
             modifier = Modifier
@@ -134,28 +157,33 @@ fun mobilehomepage(){
         )
 
 
-        Column(Modifier.fillMaxWidth().fillMaxHeight()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.TopStart),
+            verticalArrangement = Arrangement.Top
+        ) {
         Text(
             text = "Black Pearl, Where Every Piece Has Sailed Through Time",
             color = Color(0xFFE6D3A3),
             fontSize = 10.sp,
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(top = 52.dp)
+            modifier = Modifier.padding(top = 65.dp)
                 .offset { IntOffset(offsetX.value.toInt(), 0) }
         )
-            Spacer(Modifier.height(7.dp))
+            Spacer(Modifier.height(20.dp))
             Image(
                 painter = painterResource(Res.drawable.logolo),
                 contentDescription = "logo",
                 contentScale = ContentScale.Fit,
-                modifier = Modifier.size(110.dp).padding(start = 10.dp)
+                modifier = Modifier.size(110.dp).padding(top = 15.dp, start = 1.dp)
             )
-            Spacer(Modifier.height(5.dp))
+            Spacer(Modifier.height(35.dp))
 
             Row(
                 modifier = Modifier
                     .clickable {  }
-                    .padding(end = 37.dp),
+                    .padding(end = 10.dp),
             ) {
                 Spacer(Modifier.weight(1f))
                 Column(Modifier.clickable(onClick = {  })) {
@@ -174,14 +202,13 @@ fun mobilehomepage(){
                         modifier = Modifier.size(40.dp).padding(start = 16.dp)
                     )
                 }
-                Spacer(modifier = Modifier.width(6.dp))
             }
 
-            Spacer(Modifier.height(77.dp))
+            Spacer(Modifier.height(90.dp))
             Row {
                 Text(
                     text = "Explore",
-                    modifier = Modifier.padding(start = 50.dp).clickable(onClick = {  }),
+                    modifier = Modifier.padding(start = 30.dp).clickable(onClick = {  }),
                     fontFamily = FontFamily.Cursive,
                     fontStyle = FontStyle.Italic,
                     fontWeight = FontWeight.Bold,
@@ -416,6 +443,77 @@ Spacer(Modifier.width(8.dp))
 
 }
 
+@Composable
+fun UnsupportedDeviceScreen() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF0B1C2D)),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Device Not Supported",
+                color = Color(0xFFF6CF9A),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Spacer(Modifier.height(8.dp))
+
+            Text(
+                text = "Please use a larger screen",
+                color = Color(0xFFE8D8B5),
+                fontSize = 12.sp
+            )
+        }
+    }
+}
+
+@Composable
+fun RotateDeviceScreen() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF0B1C2D)),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Please rotate your device",
+                color = Color(0xFFF6CF9A),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Spacer(Modifier.height(8.dp))
+
+            Text(
+                text = "Portrait mode is required",
+                color = Color(0xFFE8D8B5),
+                fontSize = 12.sp
+            )
+        }
+    }
+}
+
+
+
+@Composable
+fun isLandscape(): Boolean {
+    val size = LocalWindowInfo.current.containerSize
+    return size.width > size.height
+}
+
+@Composable
+fun isTooSmallPhone(): Boolean {
+    val size = LocalWindowInfo.current.containerSize
+    return size.width < 320
+}
 
 
 
