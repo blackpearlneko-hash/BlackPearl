@@ -9,8 +9,9 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
 object KtorClient {
-    private const val BASE_URL = "http://localhost:5000"
-
+    private const val BASE_URL = "https://backend-t2gv.onrender.com"
+//https://backend-t2gv.onrender.com
+//    http://localhost:5000
     val httpClient = HttpClient {
         // 1. Configure the Base URL
         defaultRequest {
