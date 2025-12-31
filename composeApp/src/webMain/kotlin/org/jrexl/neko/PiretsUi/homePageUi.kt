@@ -304,7 +304,7 @@ Spacer(Modifier.width(50.dp))
 //                fontSize = 15.sp,
 //                color = Color(0xFFF6CF9A),)
 
-            Spacer(Modifier.height((basedep * 15).dp))
+            Spacer(Modifier.height((basedep * 40).dp))
 
             Row {
                 Spacer(Modifier.width(14.dp))
