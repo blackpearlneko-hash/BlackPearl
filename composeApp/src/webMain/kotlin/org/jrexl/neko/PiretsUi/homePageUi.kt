@@ -128,14 +128,13 @@ fun mobilehomepage(onNavigate: (String) -> Unit){
     val FooterMuted = Color(0xFFE8D8B5)
 
     val heightDp = screenheight()
-    val ratio = heightWidthRatio()
 
     val basedep: Float = when (heightCategory(heightDp)) {
 
         HeightCategory.H640 -> 1.0f
         HeightCategory.H655 -> 1.30f
         HeightCategory.H670 -> 1.2f
-        HeightCategory.H685 -> 1.3f
+        HeightCategory.H685 -> 1.2f
         HeightCategory.H700 -> 1.2f
         HeightCategory.H715 -> 1.2f
         HeightCategory.H730 -> 1.23f
@@ -144,7 +143,7 @@ fun mobilehomepage(onNavigate: (String) -> Unit){
         HeightCategory.H775 -> 1.9f
         HeightCategory.H790 -> 2.0f
         HeightCategory.H805 -> 1.26f
-        HeightCategory.H820 -> 2.2f
+        HeightCategory.H820 -> 1.6f
         HeightCategory.H835 -> 1.7f
     }
 
@@ -194,8 +193,6 @@ fun mobilehomepage(onNavigate: (String) -> Unit){
                     )
                 )
         )
-
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -306,6 +303,8 @@ Spacer(Modifier.width(50.dp))
 //                fontWeight = FontWeight.Bold,
 //                fontSize = 15.sp,
 //                color = Color(0xFFF6CF9A),)
+
+            Spacer(Modifier.height((basedep * 15).dp))
 
             Row {
                 Spacer(Modifier.width(14.dp))

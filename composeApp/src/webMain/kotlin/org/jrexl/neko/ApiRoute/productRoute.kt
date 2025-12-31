@@ -8,23 +8,16 @@ import io.ktor.http.path
 import org.jrexl.neko.dataclass.Productdc
 
 object productRoute {
-    suspend fun getproduct(): List<Productdc>{
+    suspend fun getProduct(page: Int): List<Productdc> {
         return KtorClient.httpClient.get {
-            url{
-                path( "product","productdet")
-
+            url {
+                path("product", "productdet")
+                parameters.append("page", page.toString())
             }
             contentType(ContentType.Application.Json)
         }.body()
     }
 
 
-    suspend fun getbestproduct(): List<Productdc>{
-        return KtorClient.httpClient.get {
-            url{
-                path("product", "bestproduct")
-            }
-            contentType(ContentType.Application.Json)
-        }.body()
-    }
+
 }

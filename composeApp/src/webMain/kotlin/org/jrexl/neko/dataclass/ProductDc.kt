@@ -9,18 +9,9 @@ data class Productdc(
     @SerialName("Prodtname")
     val name: String,
 
-    @SerialName("Prodtdescription")
-    val description: String,
-
     @SerialName("Prodtprice")
-    val price: Double, // Change to String if your backend sends it as a string
+    val price: Double,
 
-    @SerialName("Prodtcategory")
-    val category: String,
-
-    @SerialName("ProdtstockQuantity")
-    val stockQuantity: Int,
-
-    @SerialName("Productimg")
-    val images: List<String>
+    @SerialName("Productimg")   // ✅ MUST MATCH BACKEND
+    val images: List<String> = emptyList()
 )

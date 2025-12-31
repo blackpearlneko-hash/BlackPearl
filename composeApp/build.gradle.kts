@@ -41,6 +41,8 @@ kotlin {
             implementation("io.ktor:ktor-client-core:3.0.0")
             implementation("media.kamel:kamel-image-default:1.0.8")
 
+
+
         }
 
         commonTest.dependencies {
